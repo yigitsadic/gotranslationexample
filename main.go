@@ -65,7 +65,7 @@ func main() {
 	}()
 
 	if err = watcher.Add(fmt.Sprintf("locales/%s.json", lang)); err != nil {
-		fmt.Println("Error watching Turkish locale", err)
+		fmt.Printf("Error watching %s locale: %s\n", lang, err)
 	}
 
 	runMessageTicker(&greetingMessage)
