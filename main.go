@@ -22,7 +22,7 @@ func runMessageTicker(message *string) {
 	ticker := time.NewTicker(5 * time.Second)
 	go func() {
 		for range ticker.C {
-			fmt.Println(*message)
+			log.Println(*message)
 		}
 	}()
 }
@@ -59,13 +59,13 @@ func main() {
 				localizer = loadLocales(bundle, lang)
 				greetingMessage = localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: "WelcomeMessage"})
 			case watcherErr := <-watcher.Errors:
-				fmt.Println("Error ocurred: ", watcherErr)
+				log.Fatalf("Error ocurred: %s\n", watcherErr)
 			}
 		}
 	}()
 
 	if err = watcher.Add(fmt.Sprintf("locales/%s.json", lang)); err != nil {
-		fmt.Printf("Error watching %s locale: %s\n", lang, err)
+		log.Fatalf("Error watching %s locale: %s\n", lang, err)
 	}
 
 	runMessageTicker(&greetingMessage)
