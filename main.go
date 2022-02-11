@@ -13,9 +13,7 @@ import (
 )
 
 func loadLocales(b *i18n.Bundle, lang string) *i18n.Localizer {
-	b.MustLoadMessageFile("locales/en.json")
-	b.MustLoadMessageFile("locales/tr.json")
-	b.MustLoadMessageFile("locales/fr.json")
+	b.MustLoadMessageFile(fmt.Sprintf("./locales/%s.json", lang))
 
 	return i18n.NewLocalizer(b, lang)
 }
@@ -66,16 +64,8 @@ func main() {
 		}
 	}()
 
-	if err = watcher.Add("./locales/tr.json"); err != nil {
+	if err = watcher.Add(fmt.Sprintf("locales/%s.json", lang)); err != nil {
 		fmt.Println("Error watching Turkish locale", err)
-	}
-
-	if err = watcher.Add("./locales/en.json"); err != nil {
-		fmt.Println("Error watching English locale", err)
-	}
-
-	if err = watcher.Add("./locales/fr.json"); err != nil {
-		fmt.Println("Error watching French locale", err)
 	}
 
 	runMessageTicker(&greetingMessage)
